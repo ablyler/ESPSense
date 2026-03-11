@@ -1,18 +1,13 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.core import CORE
 from esphome.components import sensor
 from esphome.const import CONF_ID, CONF_NAME, CONF_VOLTAGE, CONF_MAC_ADDRESS
-
-AUTO_LOAD = ["json"]
 
 CONF_PLUGS = "plugs"
 CONF_POWER_SENSOR = "power_sensor"
 CONF_CURRENT_SENSOR = "current_sensor"
 CONF_VOLTAGE_SENSOR = "voltage_sensor"
 CONF_ENCRYPT = "encrypt"
-
-json_ns = cg.esphome_ns.namespace("json")
 
 espsense_ns = cg.esphome_ns.namespace("espsense")
 ESPSense = espsense_ns.class_("ESPSense", cg.Component)
@@ -54,9 +49,6 @@ CONFIG_SCHEMA = (
 )
 
 async def to_code(config):
-    if CORE.is_esp8266:
-        cg.add_library("ESPAsyncUDP", "")
-
     var = cg.new_Pvariable(config[CONF_ID])
     await cg.register_component(var, config)
 
